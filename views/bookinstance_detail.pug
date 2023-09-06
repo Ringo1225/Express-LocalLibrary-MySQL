@@ -1,0 +1,27 @@
+extends layout
+
+block content
+
+  h1 ID: #{bookinstance.id}
+
+  p #[strong Title: ]
+    a(href="/catalog/book/" + bookinstance.Book.id) #{bookinstance.Book.title}
+  p #[strong Imprint:] #{bookinstance.imprint}
+
+  p #[strong Status: ]
+    if bookinstance.status=='Available'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status=='Maintenance'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status}
+
+  if bookinstance.status!='Available'
+    - const formattedDate = new Date(bookinstance.due_back).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    p #[strong Due back:] #{formattedDate}
+
+  hr
+  p
+    a(href="/catalog/bookinstance/" + bookinstance.id+'/delete') Delete bookinstance
+  p
+    a(href="/catalog/bookinstance/" + bookinstance.id+'/update') Update bookinstance

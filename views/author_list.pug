@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each author in author_list
+      li
+        - const date_of_birth_formatted = author.date_of_birth ? new Date(author.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ""
+        - const date_of_death_formatted = author.date_of_death ? new Date(author.date_of_death).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ""
+        a(href="/catalog/author/" + author.id) #{author.family_name}, #{author.first_name}
+        |  (#{date_of_birth_formatted} - #{date_of_death_formatted})
+
+    else
+      li There are no authors.
